@@ -29,11 +29,9 @@ void xstd_node_iterative_print(struct xstd_node *node) {
     printf("Node Next Address: %p\n", (void *)node->next);
     node = node->next;
   }
-  puts(__func__);
 }
 void xstd_node_recursive_print(struct xstd_node *node) {
   if (node == NULL) {
-    puts(__func__);
     return;
   }
 
@@ -44,7 +42,6 @@ void xstd_node_recursive_print(struct xstd_node *node) {
 }
 void xstd_node_recursive_reversed_print(struct xstd_node *node) {
   if (node == NULL) {
-    puts(__func__);
     return;
   }
   xstd_node_recursive_reversed_print(node->next);

@@ -11,17 +11,10 @@
 #define XSTD_ANSI_BOLD "\x1b[1m"
 #define XSTD_ANSI_RESET "\x1b[0m"
 
-static void xstd_prefix(void) {
-  printf("(%s%s%s%s)", XSTD_ANSI_MAGENTA, XSTD_ANSI_BOLD, "xstd",
-         XSTD_ANSI_RESET);
-} // xstd_prefix
+static void xstd_prefix(void) {} // xstd_prefix
 
 static void xstd_location_log(const char *file, unsigned int line,
-                              const char *function) {
-  xstd_prefix();
-  printf(" %s%s%s %u %s%s", XSTD_ANSI_CYAN, XSTD_ANSI_ITALIC, file, line,
-         function, XSTD_ANSI_RESET);
-} // xstd_location_log
+                              const char *function) {} // xstd_location_log
 
 void xstd_informational_log(const char *message, const char *file,
                             unsigned int line, const char *function) {
@@ -32,8 +25,10 @@ void xstd_informational_log(const char *message, const char *file,
 
 void xstd_error_log(const char *message, const char *file, unsigned int line,
                     const char *function) {
-
-  xstd_location_log(file, line, function);
+  printf("(%s%s%s%s) ", XSTD_ANSI_MAGENTA, XSTD_ANSI_BOLD, "xstd",
+         XSTD_ANSI_RESET);
+  printf("%s%s%s %u %s%s ", XSTD_ANSI_CYAN, XSTD_ANSI_ITALIC, file, line,
+         function, XSTD_ANSI_RESET);
   printf(" %s%s%s%s\n", XSTD_ANSI_RED, XSTD_ANSI_BOLD, message,
          XSTD_ANSI_RESET);
 } // xstd_error_log

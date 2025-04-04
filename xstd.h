@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 
-// xstd_log.c
+// FIX: xstd_log.c
 extern void xstd_informational_log(const char *message, const char *file,
                                    unsigned int line, const char *function);
 extern void xstd_error_log(const char *message, const char *file,
@@ -23,6 +23,20 @@ extern void xstd_node_iterative_print(struct xstd_node *node);
 extern void xstd_node_recursive_print(struct xstd_node *node);
 extern void xstd_node_recursive_reversed_print(struct xstd_node *node);
 
-extern struct xstd_node *xstd_find_node(struct xstd_node *node, int data);
+// xstd_singly_linked_list.c
+extern struct xstd_singly_linked_list *
+xstd_singly_linked_list_create_node(int data,
+                                    struct xstd_singly_linked_list *next);
+extern void
+xstd_singly_linked_list_delete(struct xstd_singly_linked_list *list);
+
+extern void *
+xstd_singly_linked_list_insert_front(int data,
+                                     struct xstd_singly_linked_list *list);
+
+extern void
+xstd_singly_linked_list_insert_back(int data,
+                                    struct xstd_singly_linked_list *list);
+extern void xstd_singly_linked_list_print(struct xstd_singly_linked_list *list);
 
 #endif // __XSTD_H__
