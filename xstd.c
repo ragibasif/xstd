@@ -1,5 +1,4 @@
-#include "../include/xstd.h"
-#include <stdio.h>
+#include "xstd.h"
 
 int main(int argc, char **argv) {
     (void)argc;

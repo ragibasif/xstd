@@ -6,26 +6,21 @@ MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := clang
-CFLAGS += -std=c99 -Iinclude -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
+CFLAGS += -std=c99  -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
 DBG = lldb
 
 LDFLAGS := -v -lc
-LIBS =
 
-INSTALL_DIRECTORY := bin
-SOURCE_DIRECTORY := src
-INCLUDE_DIRECTORY := include
-BUILD_DIRECTORY := build
 TEST_DIRECTORY := tests
 
-EXECUTABLE := $(BUILD_DIRECTORY)/xstd
+EXECUTABLE := xstd
 
-SRCS := $(wildcard $(SOURCE_DIRECTORY)/*.c)
-HDRS := $(wildcard $(INCLUDE_DIRECTORY)/*.h)
-OBJS := $(patsubst $(SOURCE_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%.o, $(SRCS))
+SRCS := $(wildcard *.c)
+HDRS := $(wildcard *.h)
+OBJS := $(patsubst %.c, %.o, $(SRCS))
 
 TEST_SRCS := $(wildcard $(TEST_DIRECTORY)/*.c)
-TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(BUILD_DIRECTORY)/%, $(TEST_SRCS))
+TEST_BINS := $(patsubst $(TEST_DIRECTORY)/%.c, $(TEST_DIRECTORY)/%, $(TEST_SRCS))
 
 .PHONY: all clean help run test check debug
 
@@ -47,23 +42,20 @@ check:
 
 $(EXECUTABLE): $(OBJS)
 	@echo "🔧 Linking ${MAGENTA}$@${RESET} ..."
-	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) && \
 		echo "$(GREEN)✅ Build successful: $@$(RESET)" || \
 		(echo "$(RED)❌ Linking failed: $@$(RESET)" && exit 1)
 
-$(BUILD_DIRECTORY)/%.o: $(SOURCE_DIRECTORY)/%.c
+%.o: %.c
 	@echo "🔧 Compiling ${MAGENTA}$<${RESET} ..."
-	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) -c $< -o $@ && \
 		echo "$(GREEN)✅ Compiled: $<$(RESET)" || \
 		(echo "$(RED)❌ Compile failed: $<$(RESET)" && exit 1)
 
 test: $(TEST_BINS)
 
-$(BUILD_DIRECTORY)/%: $(TEST_DIRECTORY)/%.c $(wildcard $(INCLUDE_DIRECTORY)/*.h)
+$(TEST_DIRECTORY)/%: $(TEST_DIRECTORY)/%.c $(HDRS)
 	@echo "🧪 Compiling test ${MAGENTA}$<${RESET} ..."
-	@mkdir -p $(BUILD_DIRECTORY)
 	@$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) && \
 		echo "$(GREEN)✅ Test build successful: $@$(RESET)" || \
 		(echo "$(RED)❌ Test build failed: $<$(RESET)" && exit 1)
@@ -73,8 +65,8 @@ debug: $(EXECUTABLE)
 	@$(DBG) ./${EXECUTABLE}
 
 clean:
-	@echo "${MAGENTA}make clean${RESET} $(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out"
-	@$(RM) -r $(EXECUTABLE) $(OBJS) $(INSTALL_DIRECTORY) $(BUILD_DIRECTORY) *~ *.bak *.dSYM *.out .install .*.un~
+	@echo "${MAGENTA}make clean${RESET} $(RM) -r $(EXECUTABLE) $(OBJS) *~ *.bak *.dSYM *.out"
+	@$(RM) -r $(EXECUTABLE) $(OBJS) *~ *.bak *.dSYM *.out .*.un~
 
 
 run: $(EXECUTABLE)
