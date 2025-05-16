@@ -6,14 +6,14 @@ MAGENTA=\033[0;95m
 RESET=\033[0m
 
 CC := clang
-CFLAGS += -std=c99  -Wall -Wextra -Weverything -O0 -g3 -pedantic -DDEBUG -v
+CFLAGS := -std=c99  -Wall -Wextra -Weverything -O1 -g -pedantic -v -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 DBG = lldb
 
 LDFLAGS := -v -lc
 
 TEST_DIRECTORY := tests
 
-EXECUTABLE := xstd
+EXECUTABLE := program
 
 SRCS := $(wildcard *.c)
 HDRS := $(wildcard *.h)

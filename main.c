@@ -1,9 +1,12 @@
-#include "xstd.h"
+#include "main.h"
 #define F_MEMORY_DEBUG /* turns on the memory debugging system */
 #define F_MEMORY_PRINT /* turns on the memory printing system */
 #define F_EXIT_CRASH   /* turns on the crash on exit */
 #include "forge.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
