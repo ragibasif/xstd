@@ -7,6 +7,10 @@
 extern "C" {
 #endif // __cplusplus
 
+#include "AEC.h"
+#include "MACROS.h"
+#include "TOKENS.h"
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

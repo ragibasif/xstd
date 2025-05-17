@@ -7,11 +7,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+static void aec_demo() {
+    printf("%s%s%s\n", AEC_RED, "RED", AEC_RESET);
+    printf("%s%s%s\n", AEC_CYAN, "CYAN", AEC_RESET);
+    printf("%s%s%s\n", AEC_MAGENTA, "MAGENTA", AEC_RESET);
+    printf("%s%s%s\n", AEC_DEFAULT, "DEFAULT", AEC_RESET);
+}
+
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
 
     printf("Hello, world!\n");
+    aec_demo();
 
     // memory debugging - dont touch
     f_debug_memory_init(NULL, NULL, NULL);
